@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <!--Date:2017-08-11 -->
+    <!--关于欧几里得算法（辗转相除法）的正确性证明 -->
+    <!--P8~P10 -->
+    <meta charset="UTF-8">
+    <title>辗转相除法的正确性证明</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <style>
+        h4,p{text-indent:2em}
+    </style>
+</head>
+<body style="width: 720px;margin: auto auto" >
+<h4>Rust代码</h4>
+    <pre class=".pre-scrollable">
+        fn gcd(x:i32,y:i32)->i32
+        {
+            if y==0{
+                return x;
+            }else {
+                return gcd(y,x % y)
+            }
+        }
+
+        fn main() {
+            let (x,y) = (12,18);
+            println!("{0}",gcd(x,y))
+        }
+    </pre>
+<hr>
+<p >要证明辗转相除法的正确性我们可以使用数学归纳法 下面给出数学归纳法的定义</p>
+<p><strong>定义</strong>&nbsp;假设P是一个定义在自然数集合N上的命题。如果：</p>
+<ul>
+    <li>P(1)为TRUE</li>
+    <li>&#8704; k &#8712; <strong>N</strong>,P(1)&#8743;P(2)&#8743;…&#8743;p(k)&#8594;p(k+1).
+        则对所有的自然数n,P(n)为TRUE</li>
+</ul>
+<h4>证明</h4>
+<p>我们对算法的y参数进行归纳。首先对于P(0)，由于y==0满足条件则返回了a，这与最大公约数的定义一致。满足第一条</p>
+<p>接着继续证明，我们假设对于任意的y&lt;k,P(y)均成立。那么对于p(k)来说执行gcd(x,k)递归调用gcd(k,x%k),容易知道x%k &lt; k 那么对于gcd(k,x%k)已经假设正确，而
+    gcd(x,k)==gcd(k,x%k) 因此我们的证对于P(k)算法正确，由数学归纳法得知，对于任意的非负整数，该算法正确</p>
+</body>
+</html>
